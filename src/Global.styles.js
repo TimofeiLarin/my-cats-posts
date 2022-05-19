@@ -28,7 +28,7 @@ h1 {
   }
 }
 h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   @media ${(props) => props.theme.media.phone} {
     font-size: 2rem;
   }

@@ -30,11 +30,12 @@ export const postsSlice = createSlice({
     },
     [fetchPosts.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.allPosts.splice(
-        state.allPosts.length - 1,
-        0,
-        ...action.payload.filteredPosts
-      );
+      state.allPosts = [...state.allPosts, ...action.payload.filteredPosts];
+      // .splice(
+      //   state.allPosts.length - 1,
+      //   0,
+      //   ...action.payload.filteredPosts
+      // );
       state.keyAfter = action.payload.after;
       state.error = '';
     },
