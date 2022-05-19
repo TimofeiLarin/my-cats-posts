@@ -16,7 +16,7 @@ export const ModalWrapper = styled.div`
 export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 70%;
   margin-top: 100px;
   border: 2px solid $border;
   border-radius: 10px;

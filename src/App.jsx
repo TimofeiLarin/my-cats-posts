@@ -60,7 +60,10 @@ const App = () => {
           <Post key={dataPost.id} data={dataPost} index={index} />
         ))}
 
-      <ScrollUpButton style={{ background: '#67C3F3' }} />
+      <ScrollUpButton
+        ShowAtPosition={1000}
+        style={{ background: '#67C3F3' }}
+      />
       <div ref={lastElement} style={{ height: 40, background: 'green' }}>
         LAST ELEMENT
       </div>

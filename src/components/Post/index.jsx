@@ -1,10 +1,21 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { favoritesSlice } from '../../store/slice/favoritesSlice';
+import { Button } from '../UI';
 
 const Post = ({ data, index }) => {
   const { id, title, author, post_hint, media, url } = data;
+  const { favoritesPosts } = useSelector((state) => state.favoritesReducer);
+  let isActive = false;
+  const handleClick = () => {
+    isActive = Boolean(
+      favoritesPosts.find(({ idFavorites }) => idFavorites === id)
+    );
+    console.log(isActive);
+    dispatch(favoritesSlice.actions.addDeleteFavorites(data));
+  };
+  console.log(isActive ? 1 : 0);
   const dispatch = useDispatch();
   return (
     <div key={id}>
@@ -21,13 +32,9 @@ const Post = ({ data, index }) => {
         <img src={url} width="400" alt="Post image" />
       )}
       <div>
-        <button
-          onClick={() =>
-            dispatch(favoritesSlice.actions.addDeleteFavorites(data))
-          }
-        >
+        <Button active={isActive} onClick={handleClick}>
           Добавить в израбнное и удалить+++
-        </button>
+        </Button>
       </div>
     </div>
   );
