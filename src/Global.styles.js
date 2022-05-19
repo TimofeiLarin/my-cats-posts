@@ -46,7 +46,7 @@ export const theme = {
     mainText: '#000000',
     otherText: 'rgba(0, 0, 0, 0.35)',
     lightText: '#FFFFFF',
-    headerBg: 'linear-gradient(183.41deg, #67C3F3 -8.57%, #5A98F2 82.96%);',
+    headerBg: 'linear-gradient(183deg, #67C3F3, #5A98F2 83%);',
     border: '#5A98F2',
     buttonAdd: '#A7FE4D',
     buttonDelete: '#FE6464',

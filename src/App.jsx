@@ -1,17 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {VerticleButton as ScrollUpButton} from 'react-scroll-up-button';
+import { VerticleButton as ScrollUpButton } from 'react-scroll-up-button';
 
 import Header from './components/Header';
+import ModalFavorites from './components/ModalFavorites';
+import Post from './components/Post';
 import fetchPosts from './store/actions/fetchPosts';
 
 const App = () => {
+  const [modalActive, setModalActive] = useState(false);
+  const lastElement = useRef();
+  const observer = useRef();
   const { allPosts, keyAfter, error, isLoading } = useSelector(
     (state) => state.postsReducer
   );
   const dispatch = useDispatch();
-  const lastElement = useRef();
-  const observer = useRef();
 
   useEffect(() => {
     dispatch(fetchPosts(keyAfter));
@@ -33,30 +36,36 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
+      <button
+        style={{
+          position: 'fixed',
+          right: 50,
+          bottom: 100,
+          background: '#67C3F3',
+        }}
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+          })
+        }
+      >
+        MY UP
+      </button>
+      <Header setActive={setModalActive} />
       {error && <h2>{error}</h2>}
       {allPosts &&
-        allPosts.map(({ id, author, title, url, media, post_hint }, i) => (
-          <div key={id}>
-            <h2>
-              index:{i}___{title}
-            </h2>
-            <p>author: {author}</p>
-            <p>id:{id}</p>
-            {post_hint === 'hosted:video' ? (
-              <video width="400" height="300" controls="controls">
-                <source src={media.reddit_video.fallback_url} />
-              </video>
-            ) : (
-              <img src={url} width="400" alt="Post image" />
-            )}
-          </div>
+        allPosts.map((dataPost, index) => (
+          <Post key={dataPost.id} data={dataPost} index={index} />
         ))}
-      <ScrollUpButton style={{background: '#67C3F3'}} />
+
+      <ScrollUpButton style={{ background: '#67C3F3' }} />
       <div ref={lastElement} style={{ height: 40, background: 'green' }}>
         LAST ELEMENT
       </div>
       {isLoading && <h2>Loading...</h2>}
+      {modalActive && <ModalFavorites setActive={setModalActive} />}
     </div>
   );
 };

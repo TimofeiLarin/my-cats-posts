@@ -13,17 +13,7 @@ const initialState = {
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {
-    addFavorites(state, action) {
-      state.favoritesPosts.unshift(action.payload);
-    },
-    deleteFavorites(state, action) {
-      state.favoritesPosts.splice(
-        state.favoritesPosts.findIndex(({ id }) => id === action.payload),
-        1
-      );
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchPosts.pending.type]: (state) => {
       state.isLoading = true;
@@ -31,11 +21,6 @@ export const postsSlice = createSlice({
     [fetchPosts.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       state.allPosts = [...state.allPosts, ...action.payload.filteredPosts];
-      // .splice(
-      //   state.allPosts.length - 1,
-      //   0,
-      //   ...action.payload.filteredPosts
-      // );
       state.keyAfter = action.payload.after;
       state.error = '';
     },
