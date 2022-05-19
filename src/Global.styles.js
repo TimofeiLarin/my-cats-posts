@@ -23,12 +23,21 @@ html {
 }
 h1 {
   font-size: 4rem;
+  @media ${(props) => props.theme.media.phone} {
+    font-size: 3rem;
+  }
 }
 h2 {
   font-size: 3rem;
+  @media ${(props) => props.theme.media.phone} {
+    font-size: 2rem;
+  }
 }
 p {
   font-size: 2rem;
+  @media ${(props) => props.theme.media.phone} {
+    font-size: 1.8rem;
+  }
 }
 `;
 
