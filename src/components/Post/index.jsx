@@ -1,24 +1,19 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { memo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { favoritesSlice } from '../../store/slice/favoritesSlice';
 import { Button } from '../UI';
 
-const Post = ({ data, index }) => {
-  const { id, title, author, post_hint, media, url } = data;
-  const { favoritesPosts } = useSelector((state) => state.favoritesReducer);
-  let isActive = false;
-  const handleClick = () => {
-    isActive = Boolean(
-      favoritesPosts.find(({ idFavorites }) => idFavorites === id)
-    );
-    console.log(isActive);
-    dispatch(favoritesSlice.actions.addDeleteFavorites(data));
-  };
-  console.log(isActive ? 1 : 0);
+const Post = memo(({ data, index }) => {
   const dispatch = useDispatch();
+  const { id, title, author, post_hint, media, url } = data;
+  const clickChangeFavorites = () => {
+    dispatch(
+      favoritesSlice.actions.addDeleteFavorites(data)
+    );
+  };
   return (
-    <div key={id}>
+    <div>
       <h2>
         index:{index}___{title}
       </h2>
@@ -32,12 +27,13 @@ const Post = ({ data, index }) => {
         <img src={url} width="400" alt="Post image" />
       )}
       <div>
-        <Button active={isActive} onClick={handleClick}>
-          Добавить в израбнное и удалить+++
+        Favorite:
+        <Button active={data.favorite} onClick={clickChangeFavorites}>
+          {data.favorite ? 'Add' : 'Not Added'}
         </Button>
       </div>
     </div>
   );
-};
+});
 
 export default Post;

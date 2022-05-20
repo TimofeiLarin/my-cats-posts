@@ -16,11 +16,13 @@ export const ModalWrapper = styled.div`
 export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
-  margin-top: 100px;
+  width: 80%;
+  height: 90%;
   border: 2px solid $border;
   border-radius: 10px;
   padding: 20px;
   background-color: #fff;
   cursor: auto;
+  overflow: scroll;
+  overflow-x: hidden;
 `;

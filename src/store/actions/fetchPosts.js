@@ -10,7 +10,14 @@ const fetchPosts = createAsyncThunk(
       );
       const data = response.data.data;
       const after = data.after;
-      const arrPosts = data.children.map((item) => item.data);
+      const arrPosts = data.children.map((item) => ({
+        id: item.data.id,
+        title: item.data.title,
+        author: item.data.author,
+        post_hint: item.data.post_hint,
+        media: item.data.media,
+        url: item.data.url,
+      }));
       const filteredPosts = arrPosts.filter(
         (item) =>
           item['post_hint'] === 'image' || item['post_hint'] === 'hosted:video'
