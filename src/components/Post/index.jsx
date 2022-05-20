@@ -18,8 +18,12 @@ const Post = memo(({ data }) => {
     <PostWrapper>
       <PostTitle>{title}</PostTitle>
       {post_hint === 'hosted:video' ? (
-        <Video controls="controls">
+        <Video controls>
+          <source src={media.reddit_video.dash_url} />
           <source src={media.reddit_video.fallback_url} />
+          <source src={media.reddit_video.hls_url} />
+          <source src={media.reddit_video.scrubber_media_url} />
+
         </Video>
       ) : (
         <Img src={url} alt="Photo_cat" />
