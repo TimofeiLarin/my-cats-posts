@@ -11,7 +11,7 @@ const Header = memo(({ setActive }) => {
     <HeaderWrapper>
       <Flex jContent={'space-between'}>
         <img width="50" src={logo} alt="Logo" />
-        <h1>Cat posts </h1>
+        <h1>Cat posts</h1>
         <Button onClick={clickOpenModal}>Favorites</Button>
       </Flex>
     </HeaderWrapper>

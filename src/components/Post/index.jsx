@@ -8,12 +8,13 @@ import { PostTitle, PostWrapper } from './Post.styles';
 
 const Post = memo(({ data }) => {
   const dispatch = useDispatch();
-  const { title, author, post_hint, media, url } = data;
+  const { title, author, post_hint, media, url, favorite } = data;
   const clickChangeFavorites = () => {
     dispatch(
       favoritesSlice.actions.addDeleteFavorites({ ...data, favorite: true })
     );
   };
+  
   return (
     <PostWrapper>
       <PostTitle>{title}</PostTitle>
@@ -23,7 +24,6 @@ const Post = memo(({ data }) => {
           <source src={media.reddit_video.fallback_url} />
           <source src={media.reddit_video.hls_url} />
           <source src={media.reddit_video.scrubber_media_url} />
-
         </Video>
       ) : (
         <Img src={url} alt="Photo_cat" />
@@ -32,8 +32,8 @@ const Post = memo(({ data }) => {
         <p>Author: {author}</p>
         <p>
           Favorite:
-          <Button post active={data.favorite} onClick={clickChangeFavorites}>
-            {data.favorite ? 'Added' : 'Not Added'}
+          <Button post active={favorite} onClick={clickChangeFavorites}>
+            {favorite ? 'Added' : 'Not Added'}
           </Button>
         </p>
       </Flex>

@@ -5,9 +5,8 @@ import Header from './components/Header';
 import ModalFavorites from './components/ModalFavorites';
 import Post from './components/Post';
 import { Button, Error, Flex, LastElement, Loading } from './components/UI';
-import { useScrollUp, useObserverScroll } from './hooks';
+import { useScrollUp, useObserverScroll, useVisibleScroll } from './hooks';
 import fetchPosts from './store/actions/fetchPosts';
-import { getFavoritesPosts } from './store/selectors/favoritesSelector';
 import {
   getError,
   getIsLoading,
@@ -23,7 +22,6 @@ const App = () => {
   const keyAfter = useSelector((state) => getKeyAfter(state));
   const error = useSelector((state) => getError(state));
   const isLoading = useSelector((state) => getIsLoading(state));
-  const favoriteArr = useSelector((state) => getFavoritesPosts(state));
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +30,7 @@ const App = () => {
 
   useObserverScroll(lastElement, keyAfter, isLoading, fetchPosts);
   const [scrollUp, handleUp] = useScrollUp(1200);
+  useVisibleScroll(modalActive);
 
   return (
     <div>
@@ -44,18 +43,10 @@ const App = () => {
       <Flex fDirection="column" alignItems="center">
         {allPosts &&
           allPosts.map((dataPost) => {
-            const favoriteData = favoriteArr.find(
-              ({ id }) => id === dataPost.id
-            );
-            if (favoriteData) {
-              return <Post key={dataPost.id} data={favoriteData} />;
-            } else {
-              return <Post key={dataPost.id} data={dataPost} />;
-            }
+            return <Post key={dataPost.id} data={dataPost} />;
           })}
-        <LastElement ref={lastElement} >
-        </LastElement>
-        {isLoading && <Loading></Loading>}
+        <LastElement ref={lastElement} />
+        {isLoading && <Loading />}
         {error && <Error>{error}</Error>}
         {modalActive && <ModalFavorites setActive={setModalActive} />}
       </Flex>

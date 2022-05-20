@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Img = styled.img`
   height: 400px;
   @media ${(props) => props.theme.media.medium} {
-    height: 340px;
+    height: 300px;
   }
   @media ${(props) => props.theme.media.tablet} {
     height: 200px;

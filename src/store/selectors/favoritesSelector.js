@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-const baseFavoritesPostsState = (state) =>
+export const baseFavoritesPostsState = (state) =>
   state.favoritesReducer.favoritesPosts;
 
 export const getFavoritesPosts = createSelector(
