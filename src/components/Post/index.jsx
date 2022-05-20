@@ -2,37 +2,38 @@ import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { favoritesSlice } from '../../store/slice/favoritesSlice';
-import { Button } from '../UI';
+import { Button, Flex, Img, Video } from '../UI';
 
-const Post = memo(({ data, index }) => {
+import { PostTitle, PostWrapper } from './Post.styles';
+
+const Post = memo(({ data }) => {
   const dispatch = useDispatch();
-  const { id, title, author, post_hint, media, url } = data;
+  const { title, author, post_hint, media, url } = data;
   const clickChangeFavorites = () => {
     dispatch(
-      favoritesSlice.actions.addDeleteFavorites(data)
+      favoritesSlice.actions.addDeleteFavorites({ ...data, favorite: true })
     );
   };
   return (
-    <div>
-      <h2>
-        index:{index}___{title}
-      </h2>
-      <p>author: {author}</p>
-      <p>id:{id}</p>
+    <PostWrapper>
+      <PostTitle>{title}</PostTitle>
       {post_hint === 'hosted:video' ? (
-        <video width="400" height="300" controls="controls">
+        <Video controls="controls">
           <source src={media.reddit_video.fallback_url} />
-        </video>
+        </Video>
       ) : (
-        <img src={url} width="400" alt="Post image" />
+        <Img src={url} alt="Photo_cat" />
       )}
-      <div>
-        Favorite:
-        <Button active={data.favorite} onClick={clickChangeFavorites}>
-          {data.favorite ? 'Add' : 'Not Added'}
-        </Button>
-      </div>
-    </div>
+      <Flex fDirection="column" alignItems="start" marginTop={10}>
+        <p>Author: {author}</p>
+        <p>
+          Favorite:
+          <Button post active={data.favorite} onClick={clickChangeFavorites}>
+            {data.favorite ? 'Added' : 'Not Added'}
+          </Button>
+        </p>
+      </Flex>
+    </PostWrapper>
   );
 });
 

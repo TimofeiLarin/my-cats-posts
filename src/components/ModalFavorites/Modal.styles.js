@@ -16,13 +16,20 @@ export const ModalWrapper = styled.div`
 export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  align-items: center;
+  width: 85%;
   height: 90%;
   border: 2px solid $border;
   border-radius: 10px;
   padding: 20px;
   background-color: #fff;
-  cursor: auto;
   overflow: scroll;
+  cursor: auto;
   overflow-x: hidden;
+  @media ${(props) => props.theme.media.tablet} {
+    width: 90%;
+  }
+  @media ${(props) => props.theme.media.phone} {
+    width: 90%;
+  }
 `;

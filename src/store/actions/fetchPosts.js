@@ -17,6 +17,7 @@ const fetchPosts = createAsyncThunk(
         post_hint: item.data.post_hint,
         media: item.data.media,
         url: item.data.url,
+        favorite: false,
       }));
       const filteredPosts = arrPosts.filter(
         (item) =>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useScrollUp = (length, time) => {
+const useScrollUp = (length) => {
   const [scrollUp, setScrollUp] = useState(false);
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler);
@@ -9,24 +9,13 @@ const useScrollUp = (length, time) => {
     };
   }, []);
 
-  const throttle = (callback, timer) => {
-    let time = 0;
-    return (...arg) => {
-      if (time + timer > Date.now()) {
-        return;
-      }
-      callback(...arg);
-      time = Date.now();
-    };
-  };
-
-  const scrollHandler = throttle((e) => {
+  const scrollHandler = (e) => {
     if (e.target.documentElement.scrollTop > length) {
       setScrollUp(true);
     } else {
       setScrollUp(false);
     }
-  }, time);
+  };
 
   const handleUp = () => {
     window.scrollTo({

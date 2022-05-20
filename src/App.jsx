@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from './components/Header';
 import ModalFavorites from './components/ModalFavorites';
 import Post from './components/Post';
+import { Button, Error, Flex, LastElement, Loading } from './components/UI';
 import { useScrollUp, useObserverScroll } from './hooks';
 import fetchPosts from './store/actions/fetchPosts';
 import { getFavoritesPosts } from './store/selectors/favoritesSelector';
@@ -17,7 +18,7 @@ import {
 const App = () => {
   const [modalActive, setModalActive] = useState(false);
   const lastElement = useRef();
-  
+
   const allPosts = useSelector((state) => getAllPosts(state));
   const keyAfter = useSelector((state) => getKeyAfter(state));
   const error = useSelector((state) => getError(state));
@@ -30,39 +31,34 @@ const App = () => {
   }, []);
 
   useObserverScroll(lastElement, keyAfter, isLoading, fetchPosts);
-  const [scrollUp, handleUp] = useScrollUp(1200, 200);
+  const [scrollUp, handleUp] = useScrollUp(1200);
 
   return (
-    <div className="App">
+    <div>
       {scrollUp && (
-        <button
-          style={{
-            position: 'fixed',
-            right: 50,
-            bottom: 100,
-            background: '#67C3F3',
-          }}
-          onClick={handleUp}
-        >
-          MY UP
-        </button>
+        <Button up onClick={handleUp}>
+          UP
+        </Button>
       )}
       <Header setActive={setModalActive} />
-      {allPosts &&
-        allPosts.map((dataPost, index) => {
-          const favoriteData = favoriteArr.find(({ id }) => id === dataPost.id);
-          if (favoriteData) {
-            return <Post key={dataPost.id} data={favoriteData} index={index} />;
-          } else {
-            return <Post key={dataPost.id} data={dataPost} index={index} />;
-          }
-        })}
-      <div ref={lastElement} style={{ height: 40, background: 'green' }}>
-        LAST ELEMENT
-      </div>
-      {isLoading && <h2>Loading...</h2>}
-      {error && <h2>{error}</h2>}
-      {modalActive && <ModalFavorites setActive={setModalActive} />}
+      <Flex fDirection="column" alignItems="center">
+        {allPosts &&
+          allPosts.map((dataPost) => {
+            const favoriteData = favoriteArr.find(
+              ({ id }) => id === dataPost.id
+            );
+            if (favoriteData) {
+              return <Post key={dataPost.id} data={favoriteData} />;
+            } else {
+              return <Post key={dataPost.id} data={dataPost} />;
+            }
+          })}
+        <LastElement ref={lastElement} >
+        </LastElement>
+        {isLoading && <Loading></Loading>}
+        {error && <Error>{error}</Error>}
+        {modalActive && <ModalFavorites setActive={setModalActive} />}
+      </Flex>
     </div>
   );
 };

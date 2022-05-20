@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { getFavoritesPosts } from '../../store/selectors/favoritesSelector';
 import Post from '../Post';
-import { Flex } from '../UI';
+import { Button, Flex } from '../UI';
 
 import { ModalContent, ModalWrapper } from './Modal.styles';
 
@@ -14,6 +14,7 @@ const ModalFavorites = memo(({ setActive }) => {
   return (
     <ModalWrapper onClick={clickCloseModal}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
+        <Button close onClick={clickCloseModal}>Close</Button>
         {favoritesPosts.length ? (
           favoritesPosts.map((dataPost, index) => (
             <Post key={dataPost.id} data={dataPost} index={index} />
